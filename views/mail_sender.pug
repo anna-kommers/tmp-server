@@ -1,0 +1,24 @@
+extends layout
+
+block content
+  h1= title
+
+  h3 Send to:
+  
+  ul
+    each val in mailList
+      li= val
+
+  span >>>>>
+  button(value="Send" class="mailSender-button") SEND
+  span <<<<<
+
+  script.
+    $('.mailSender-button').on('click', function() {
+      $.get({ url: 'mail_sender/send' }).done(function(some) {
+        console.log('----- DONE');
+        console.log(some);
+        console.log('--------------');
+      });
+    });
+

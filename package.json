@@ -1,0 +1,64 @@
+{
+  "name": "tmp-server",
+  "description" : "Kommersant TMP Server",
+  "email" : "a.andreeva@kommersant.ru",
+  "version": "0.0.1",
+  "private": true,
+  "main": "server.js",
+
+  "scripts": {
+    "start": "node server.js",
+    "build": "babel src -d lib"
+  },
+
+  "dependencies": {
+    "babel-core": "^6.5.1",
+    "babel-cli": "^6.9.0",
+    "babel-preset-es2015": "^6.5.0",
+    "babel-loader": "^6.2.2",
+    "babel-preset-react": "^6.5.0",
+    "babel-preset-stage-2": "^6.5.0",
+    "babel-polyfill": "latest",
+    "bluebird": "2.3.x",
+    "cookie": "0.1.x",
+    "cookies-js": "^1.2.1",
+    "express": "latest",
+    "history": "1.11.1",
+    "jquery": "latest",
+    "lodash": "latest",
+    "moment": "latest",
+    "react": "0.14.8",
+    "react-dom": "0.14.8",
+    "react-intl": "v2.0.0-pr-3",
+    "react-router": "2.0.x",
+    "request": "2.57.x",
+    "stylus": "latest",
+    "stylus-inline-webpack": "latest",
+    "stylus-loader": "latest",
+    "webpack": "1.13.x",
+    "body-parser": "latest",
+    "cookie-parser": "latest",
+    "pug": "latest",
+    "serve-favicon": "^2.3.0",
+    "fs": "^0.0.2",
+    "nodemailer": "^2.4.1",
+    "nodemailer-smtp-transport": "^2.5.0",
+    "winston": "latest"
+  },
+
+  "devDependencies": {
+    "babel-eslint": "latest",
+    "browserify": "^13.0.1",
+    "watchify": "^3.7.0",
+    "babelify": "^7.3.0",
+    "jscs": "latest",
+    "react-addons-test-utils": "0.14.0",
+    "react-hot-loader": "^1.2.2",
+    "webpack-dev-server": "^1.12.1",
+    "webpack-notifier": "^1.2.1"
+  },
+
+  "engines": {
+    "node": ">=6.0.0"
+  }
+}

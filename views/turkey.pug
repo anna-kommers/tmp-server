@@ -1,0 +1,87 @@
+extends layout
+
+block content
+  h1 Турция. Спецпроект
+
+  section(class="videoSection")
+    div(class="video-player")
+      video(class="video")
+        source(src="/static/video/alex.webm", type="video/webm")
+        source(src="/static/video/alex.mp4", type="video/mp4")
+        source(src="/static/video/alex.ogv", type="video/ogg")
+
+    div(class="video-controls")
+      div(class="timelineContainer")
+        span(class="background")
+        span(class="progress")
+
+      span(class="controlButton playPause playPause_play")
+      span(class="controlButton muteButton muteButton_mute")
+
+  section(class="endPoints")
+    section(class="endPoint endPoint_1")
+      div(class="endpointContainer")
+        h2 Скрин номер раз
+        p текст текст текст и иногда
+          =' '
+          a(href="ya.ru") ссылки
+        p(class="endpointLink endpointLink_next") следующий >
+        p(class="endpointLink endpointLink_play") продолжить
+        p(class="endpointLink endpointLink_stop") остановить
+        p(class="endpointLink endpointLink_prev") предыдущий <
+
+    section(class="endPoint endPoint_2")
+      div(class="endpointContainer")
+        h2 Скрин номер два
+        p текст текст текст и иногда
+          br
+          img(src="https://im0-tub-ru.yandex.net/i?id=76dfca5c98211c42c8b54680651a56ca&n=33&h=215&w=314" alt="картинка")
+        p(class="endpointLink endpointLink_next") следующий >
+        p(class="endpointLink endpointLink_play") продолжить
+        p(class="endpointLink endpointLink_stop") остановить
+        p(class="endpointLink endpointLink_prev") предыдущий <
+
+    section(class="endPoint endPoint_3")
+      div(class="endpointContainer")
+        h2 Скрин номер три
+        p тут тоже текст
+        p(class="endpointLink endpointLink_next") следующий >
+        p(class="endpointLink endpointLink_play") продолжить
+        p(class="endpointLink endpointLink_stop") остановить
+        p(class="endpointLink endpointLink_prev") предыдущий <
+
+    section(class="endPoint endPoint_4")
+      div(class="endpointContainer")
+        h2 Скрин номер чэтырэ
+        p конец
+        p(class="endpointLink endpointLink_next") следующий >
+        p(class="endpointLink endpointLink_play") продолжить
+        p(class="endpointLink endpointLink_stop") остановить
+        p(class="endpointLink endpointLink_prev") предыдущий <
+
+  section(class="timeline")
+    div(class="personsButton")
+
+    div(class="stopPoints")
+      div(class="stopPoint stopPoint_1")
+        span(class="hidden") Чекпоинт 1
+
+      div(class="stopPoint stopPoint_2")
+        span(class="hidden") Чекпоинт 2
+
+      div(class="stopPoint stopPoint_3")
+        span(class="hidden") Чекпоинт 3
+
+      div(class="stopPoint stopPoint_4")
+        span(class="hidden") Чекпоинт 4
+
+    div(class="share-buttons")
+      span(class="title") Share:
+        a(href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fkommersant.ru", target="_blank", class="facebook")
+          i FB
+        i &nbsp;
+        a(href="https://twitter.com/share?url=http%3A%2F%2Fkommersant.ru", target="_blank", class="twitter")
+          i TW
+
+  script(src="/static/javascripts/kPlayer.js")
+  script(src="/static/javascripts/turkey.js")

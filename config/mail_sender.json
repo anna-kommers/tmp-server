@@ -1,0 +1,17 @@
+{
+  "mailList": [
+    "a.andreeva@kommersant.ru",
+    "zoodwa@gmail.com",
+    "denis.arlantsev@gmail.com",
+    "arlantsev@kommersant.ru",
+    "denis231@yandex.ru",
+    "pewpeller@gmail.com"
+  ],
+  "smtpTransport": {
+    "service": "gmail",
+    "auth": {
+      "user": "annaan@dreamindustries.co",
+      "pass": "6155451368"
+    }
+  }
+}
