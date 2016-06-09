@@ -1,9 +1,7 @@
 'strict mode'
 
 function KPlayer(videoContainer) {
-  let
-    self = this,
-    container = $('.' + videoContainer).first();
+  let container = $('.' + videoContainer).first();
 
   this.videoObj = $('.video', container).get(0);
 
@@ -47,8 +45,6 @@ KPlayer.prototype.pause = function() {
 }
 
 KPlayer.prototype.nextStopPoint = function() {
-  console.log('ACTIVE: ', this.activeStopPoint.time);
-
   let
     stopPoint = null,
     nextPoints = [];
@@ -57,24 +53,39 @@ KPlayer.prototype.nextStopPoint = function() {
     let stopPoint = this.stopPoints[i];
 
     if (stopPoint.time > this.activeStopPoint.time) {
-
       nextPoints.push(stopPoint.time);
     }
-
-
-
   }
 
-  Math.min.apply(null, nextPoints);
-  console.log(Math.min.apply(null, nextPoints));
+  stopPoint = Math.min.apply(null, nextPoints);
 
-  stopPoint && this.goToStopPoint(stopPoint);
+  if (stopPoint) {
+    for (let i = 0; i < this.stopPoints.length; i++) {
+      this.stopPoints[i].time == stopPoint && this.goToStopPoint(this.stopPoints[i]);
+    }
+  }
 }
 
 KPlayer.prototype.prevStopPoint = function() {
-  let stopPoint = null;
+  let
+    stopPoint = null,
+    nextPoints = [];
 
-  stopPoint && this.goToStopPoint(stopPoint);
+  for (let i = 0; i < this.stopPoints.length; i++) {
+    let stopPoint = this.stopPoints[i];
+
+    if (stopPoint.time < this.activeStopPoint.time) {
+      nextPoints.push(stopPoint.time);
+    }
+  }
+
+  stopPoint = Math.max.apply(null, nextPoints);
+
+  if (stopPoint) {
+    for (let i = 0; i < this.stopPoints.length; i++) {
+      this.stopPoints[i].time == stopPoint && this.goToStopPoint(this.stopPoints[i]);
+    }
+  }
 }
 
 KPlayer.prototype.mute = function() {
