@@ -45,47 +45,35 @@ KPlayer.prototype.pause = function() {
 }
 
 KPlayer.prototype.nextStopPoint = function() {
-  let
-    stopPoint = null,
-    nextPoints = [];
-
-  for (let i = 0; i < this.stopPoints.length; i++) {
-    let stopPoint = this.stopPoints[i];
-
-    if (stopPoint.time > this.activeStopPoint.time) {
-      nextPoints.push(stopPoint.time);
-    }
-  }
-
-  stopPoint = Math.min.apply(null, nextPoints);
-
-  if (stopPoint) {
-    for (let i = 0; i < this.stopPoints.length; i++) {
-      this.stopPoints[i].time == stopPoint && this.goToStopPoint(this.stopPoints[i]);
-    }
-  }
+  this._goToNearStopPoint('next');
 }
 
 KPlayer.prototype.prevStopPoint = function() {
+  this._goToNearStopPoint('prev');
+}
+
+KPlayer.prototype._goToNearStopPoint = function(type) {
   let
-    stopPoint = null,
-    nextPoints = [];
+    mathMethod = { 'next': 'minBy', 'prev': 'maxBy' }[type],
+    activeStopPointTime = this.activeStopPoint.time,
+    stopPoint = _.reduce(this.stopPoints, function(stopPoint, nextStopPoint) {
+      let
+        stopPointTime = _.get(stopPoint, 'time'),
+        nextStopPointTime = _.get(nextStopPoint, 'time');
 
-  for (let i = 0; i < this.stopPoints.length; i++) {
-    let stopPoint = this.stopPoints[i];
+      if ((stopPointTime > activeStopPointTime && nextStopPointTime > activeStopPointTime && type == 'next') ||
+        (stopPointTime < activeStopPointTime && nextStopPointTime < activeStopPointTime && type == 'prev')) {
+        return _[mathMethod]([ stopPoint, nextStopPoint ], 'time');
+      } else if ((stopPointTime > activeStopPointTime && type == 'next') ||
+        (stopPointTime < activeStopPointTime && type == 'prev')) {
+        return stopPoint;
+      } else if ((nextStopPointTime > activeStopPointTime && type == 'next') ||
+        (nextStopPointTime < activeStopPointTime && type == 'prev')) {
+        return nextStopPoint;
+      }
+    }.bind(this));
 
-    if (stopPoint.time < this.activeStopPoint.time) {
-      nextPoints.push(stopPoint.time);
-    }
-  }
-
-  stopPoint = Math.max.apply(null, nextPoints);
-
-  if (stopPoint) {
-    for (let i = 0; i < this.stopPoints.length; i++) {
-      this.stopPoints[i].time == stopPoint && this.goToStopPoint(this.stopPoints[i]);
-    }
-  }
+  stopPoint && this.goToStopPoint(stopPoint);
 }
 
 KPlayer.prototype.mute = function() {
@@ -108,9 +96,7 @@ KPlayer.prototype.startProgress = function() {
       stopPointIndex = this.stopPointsTimer && this.stopPointsTimer[fixedCurrentTime];
 
     this.$progressBar.width((currentTime / duration) * this.$fullProgressBar.width());
-    if (stopPointIndex !== undefined) {
-      this._showEndpoint(this.stopPoints[stopPointIndex]);
-    }
+    stopPointIndex !== undefined && this._showEndpoint(this.stopPoints[stopPointIndex]);
   }
 
   this.stopProgress();
@@ -168,43 +154,39 @@ KPlayer.prototype.setStopPoints = function(stopPoints) {
   this.stopPoints = stopPoints;
 
   let getDurationInt = setInterval(function() {
-    let duration = this.videoObj.duration;
+    let duration = _.get(this, 'videoObj.duration');
 
-    if (duration) {
-      clearTimeout(getDurationInt);
+    if (!duration) return;
 
-      let
-        progressHolder = this.$timeLine,
-        curleft = progressHolder.offset().left,
-        curProgressHolder = progressHolder.offsetParent();
+    clearTimeout(getDurationInt);
+    let
+      progressHolder = this.$timeLine,
+      curleft = progressHolder.offset().left,
+      curProgressHolder = progressHolder.offsetParent();
 
-      curleft += curProgressHolder.offset().left;
+    curleft += curProgressHolder.offset().left;
 
-      for (let i = 0; i < this.stopPoints.length; i++) {
-        let stopPoint = this.stopPoints[i];
-        this.stopPoints[i].isActive = false;
+    _.forEach(this.stopPoints, function(stopPoint, key) {
+      this.stopPointsTimer[stopPoint.time] = key;
 
-        this.stopPointsTimer[stopPoint.time] = i;
+      if (stopPoint.stopPoint) {
+        let
+          $stopPoint = $('.' + stopPoint.stopPoint),
+          stopPointWidth = $stopPoint.outerWidth(),
+          offsetLeft = curleft + (progressHolder.outerWidth() / duration * stopPoint.time) - (stopPointWidth / 2),
+          styles = {
+            display: 'block',
+            bottom: '10px',
+            left: offsetLeft + 'px'
+          };
 
-        if (stopPoint.stopPoint) {
-          let
-            $stopPoint = $('.' + stopPoint.stopPoint),
-            stopPointWidth = $stopPoint.outerWidth(),
-            offsetLeft = curleft + (progressHolder.outerWidth() / duration * stopPoint.time) - (stopPointWidth / 2),
-            styles = {
-              display: 'block',
-              bottom: '10px',
-              left: offsetLeft + 'px'
-            };
+        $stopPoint.on('click', function() {
+          this.goToStopPoint(stopPoint);
+        }.bind(this));
 
-          $stopPoint.on('click', function() {
-            this.goToStopPoint(stopPoint);
-          }.bind(this));
-
-          $stopPoint.css(styles);
-        }
+        $stopPoint.css(styles);
       }
-    }
+    }.bind(this));
   }.bind(this), 50);
 }
 
