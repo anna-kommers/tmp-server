@@ -7,7 +7,7 @@ let express = require('express'),
   fs = require('fs');
 
 router.get('/', function(req, res, next) {
-  res.render('mail_sender', { 
+  res.render('mail_sender', {
     title: 'Mail sender',
     mailList: senderConfig.mailList
   });
