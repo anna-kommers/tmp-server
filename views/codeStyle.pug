@@ -1,0 +1,107 @@
+extends layout
+
+block content
+  .content
+    .central
+      h1= title
+
+      h2 JavaScript
+
+      h3 Отступы
+      span
+        | Везде применяем пробелы вместо табов (1 таб == 2 пробела). Пробелы меджу операторами и операндами обязательны (1 штука). Смысловые отбивки кода пустыми строками очень желательны.
+        | В коде в конце строк никаких висящих пробелов (поставьте для sublime плагин TrailingSpaces). В конце файла - одна пустая строка.
+      pre
+        p.code.good
+          |function foo(param) {
+          |  let some = '1';
+          |  
+          |  _.result(param, 'some.inner.function');
+          |  return some + 1;
+          |}
+      pre
+        p.code.bad
+          |function foo(param) {
+          |    let some='1';
+          |    _.result(param,'some.inner.function');
+          |    return some+1;
+          |}
+      br
+      br
+      br
+
+      h3 Блоки
+      span
+        | Блики оформляются фигурными скобками всегда, кроме однострочников. Начальная фигурная скобка на той же строке, где "заголовок" блока. Конечная - на уровне "заголовка".
+        | Точки с запятой обязательны в конце строк, если это не конец блока
+      pre
+        p.code.good
+          |function foo(param) {
+          |  let some = _.get(param, 'some.inner.variable');
+          |  
+          |  if (some.foo == 'value') {
+          |    some.bar = 5;
+          |    some.zu = 'dwa';
+          |  }
+          |  
+          |  if (some.abstract !== 1.34) return 0;
+          |  return some + 1;
+          |}
+
+      pre
+        p.code.bad
+          |function foo(param) {
+          |  let some = _.get(param, 'some.inner.variable')
+          |  
+          |  if (some.foo == 'value')
+          |  {
+          |    some.bar = 5;
+          |  };
+          |  
+          |  return some + 1
+          |}
+      br
+      br
+      br
+
+      h3 Переменные
+      span
+        | В блоке объявления переменных используем только один var/let. Если переменных больше одной, первая переменная с новой строки после let. Знак '=' отбиваем с обеих сторон одним пробелом.
+        | Имена переменных camelCase
+      pre
+        p.code.good
+          |let some = _.get(param, 'some.inner.variable');
+          |  
+          |  /* -- */
+          |  
+          |let
+          |  some = 1,
+          |  longName = 'test test',
+          |  bar = true,
+
+      pre
+        p.code.bad
+          |let some=_.get(param, 'some.inner.variable');
+          |  
+          |  /* -- */
+          |  
+          |let some = 1;
+          |let   foo   ='test test';
+          |let bar=true;
+          |  
+          |  /* -- */
+          |  
+          |let foo     = 1,
+          |    long_name = 'test test',
+          |    bar      = true;
+
+      h3 Функции
+      p.code.good
+      p.code.bad
+
+      h3 Циклы
+      p.code.good
+      p.code.bad
+
+
+      h2 CSS
